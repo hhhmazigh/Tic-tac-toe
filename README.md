@@ -1,1 +1,1 @@
-# Mazigh
+# Mazigh's Tic-tac-toe
