@@ -1,1 +1,1 @@
-# Mazigh Tic Tac Toe
+# Mazigh
