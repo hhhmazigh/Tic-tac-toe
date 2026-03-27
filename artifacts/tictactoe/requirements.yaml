@@ -1,0 +1,17 @@
+packages:
+  "framer-motion": "Stunning animations and layout transitions for game pieces and modals"
+  "canvas-confetti": "Particle effects for winning celebrations"
+  "@types/canvas-confetti": "TypeScript definitions for canvas-confetti"
+  "clsx": "Utility for constructing className strings conditionally"
+  "tailwind-merge": "Utility to efficiently merge Tailwind CSS classes"
+  "zustand": "Lightweight global state management for local game settings"
+
+images:
+  - path: "artifacts/tictactoe/public/images/hero-bg.png"
+    description: "Dark futuristic cyberpunk grid background with subtle volumetric lighting, glowing neon purple and cyan, minimal depth of field, premium gaming aesthetic"
+    aspect_ratio: "16:9"
+
+notes:
+  - "Using Zustand for local game settings to avoid messy URL parameters."
+  - "WebSockets will assume the same host as the window location."
+  - "The API hooks are imported from @workspace/api-client-react."

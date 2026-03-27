@@ -1,0 +1,159 @@
+@import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap');
+@import "tailwindcss";
+
+@theme inline {
+  --font-sans: 'Inter', sans-serif;
+  --font-display: 'Chakra Petch', sans-serif;
+
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+
+  --color-board-bg: hsl(var(--board-bg));
+  --color-cell-bg: hsl(var(--cell-bg));
+  --color-cell-border: hsl(var(--cell-border));
+  --color-symbol-x: hsl(var(--symbol-x));
+  --color-symbol-o: hsl(var(--symbol-o));
+  --color-win-line: hsl(var(--win-line));
+}
+
+:root {
+  /* Default Dark / Cyberpunk Theme */
+  --background: 240 10% 4%;
+  --foreground: 0 0% 98%;
+  --card: 240 10% 6%;
+  --card-foreground: 0 0% 98%;
+  --primary: 280 100% 65%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 240 10% 15%;
+  --secondary-foreground: 0 0% 98%;
+  --muted: 240 10% 12%;
+  --muted-foreground: 240 5% 65%;
+  --accent: 190 100% 50%;
+  --accent-foreground: 0 0% 100%;
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 0 0% 98%;
+  --border: 240 10% 15%;
+  --input: 240 10% 12%;
+  --ring: 280 100% 65%;
+
+  /* Game Specific Defaults (Neon) */
+  --board-bg: 240 10% 6%;
+  --cell-bg: 240 10% 9%;
+  --cell-border: 280 100% 65%;
+  --symbol-x: 190 100% 55%;
+  --symbol-o: 320 100% 65%;
+  --win-line: 150 100% 55%;
+}
+
+@layer base {
+  body {
+    @apply bg-background text-foreground font-sans antialiased min-h-screen overflow-x-hidden selection:bg-primary/30;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    @apply tracking-wide;
+  }
+}
+
+/* THEMES */
+.theme-classic {
+  --board-bg: 0 0% 100%;
+  --cell-bg: 0 0% 96%;
+  --cell-border: 0 0% 80%;
+  --symbol-x: 220 90% 40%;
+  --symbol-o: 0 90% 50%;
+  --win-line: 120 80% 40%;
+}
+
+.theme-neon {
+  --board-bg: 240 10% 4%;
+  --cell-bg: 240 10% 8%;
+  --cell-border: 280 100% 60%;
+  --symbol-x: 190 100% 55%;
+  --symbol-o: 320 100% 65%;
+  --win-line: 150 100% 50%;
+}
+
+.theme-wood {
+  --board-bg: 30 40% 15%;
+  --cell-bg: 30 35% 20%;
+  --cell-border: 30 50% 30%;
+  --symbol-x: 40 80% 60%;
+  --symbol-o: 10 70% 50%;
+  --win-line: 120 60% 45%;
+}
+
+.theme-ice {
+  --board-bg: 200 40% 10%;
+  --cell-bg: 200 30% 15%;
+  --cell-border: 200 80% 50%;
+  --symbol-x: 180 100% 70%;
+  --symbol-o: 210 100% 80%;
+  --win-line: 0 0% 100%;
+}
+
+.theme-fire {
+  --board-bg: 0 50% 10%;
+  --cell-bg: 0 40% 15%;
+  --cell-border: 15 100% 50%;
+  --symbol-x: 45 100% 55%;
+  --symbol-o: 0 100% 60%;
+  --win-line: 60 100% 50%;
+}
+
+.theme-space {
+  --board-bg: 260 50% 5%;
+  --cell-bg: 260 30% 10%;
+  --cell-border: 280 50% 30%;
+  --symbol-x: 50 100% 70%;
+  --symbol-o: 280 100% 75%;
+  --win-line: 180 100% 60%;
+}
+
+/* UTILITIES & EFFECTS */
+.glass-panel {
+  @apply bg-card/60 backdrop-blur-xl border border-white/10 shadow-2xl;
+}
+
+.neon-glow-primary {
+  box-shadow: 0 0 20px -5px hsl(var(--primary) / 0.5);
+}
+
+.neon-glow-accent {
+  box-shadow: 0 0 20px -5px hsl(var(--accent) / 0.5);
+}
+
+.text-gradient {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-primary via-accent to-primary;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: hsl(var(--background));
+}
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--border));
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--primary)/0.5);
+}

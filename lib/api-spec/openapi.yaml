@@ -1,0 +1,201 @@
+openapi: 3.1.0
+info:
+  title: Api
+  version: 0.1.0
+  description: Tic Tac Toe game API
+servers:
+  - url: /api
+    description: Base API path
+tags:
+  - name: health
+    description: Health operations
+  - name: rooms
+    description: Game room operations
+  - name: leaderboard
+    description: Leaderboard operations
+paths:
+  /healthz:
+    get:
+      operationId: healthCheck
+      tags: [health]
+      summary: Health check
+      responses:
+        "200":
+          description: Healthy
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthStatus"
+
+  /rooms:
+    post:
+      operationId: createRoom
+      tags: [rooms]
+      summary: Create a new game room
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateRoomRequest"
+      responses:
+        "201":
+          description: Room created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RoomResponse"
+
+  /rooms/{roomCode}:
+    get:
+      operationId: getRoom
+      tags: [rooms]
+      summary: Get room by code
+      parameters:
+        - name: roomCode
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Room found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RoomResponse"
+        "404":
+          description: Room not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /leaderboard:
+    get:
+      operationId: getLeaderboard
+      tags: [leaderboard]
+      summary: Get top players
+      parameters:
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 10
+      responses:
+        "200":
+          description: Leaderboard entries
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/LeaderboardEntry"
+
+components:
+  schemas:
+    HealthStatus:
+      type: object
+      properties:
+        status:
+          type: string
+      required: [status]
+
+    CreateRoomRequest:
+      type: object
+      properties:
+        hostName:
+          type: string
+        boardSize:
+          type: integer
+          minimum: 3
+          maximum: 10
+          default: 3
+        winLength:
+          type: integer
+          minimum: 3
+          default: 3
+        timeLimit:
+          type: integer
+          nullable: true
+          description: Seconds per turn, null for unlimited
+        symbolX:
+          type: string
+          default: "X"
+        symbolO:
+          type: string
+          default: "O"
+        theme:
+          type: string
+          default: "classic"
+      required: [hostName]
+
+    RoomResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        roomCode:
+          type: string
+        hostName:
+          type: string
+        guestName:
+          type: string
+          nullable: true
+        boardSize:
+          type: integer
+        winLength:
+          type: integer
+        timeLimit:
+          type: integer
+          nullable: true
+        symbolX:
+          type: string
+        symbolO:
+          type: string
+        theme:
+          type: string
+        status:
+          type: string
+          enum: [waiting, playing, finished]
+        board:
+          type: array
+          items:
+            type: string
+            nullable: true
+        currentTurn:
+          type: string
+          enum: [X, O]
+        winner:
+          type: string
+          nullable: true
+        createdAt:
+          type: string
+          format: date-time
+      required: [id, roomCode, hostName, boardSize, winLength, symbolX, symbolO, theme, status, board, currentTurn, createdAt]
+
+    LeaderboardEntry:
+      type: object
+      properties:
+        id:
+          type: string
+        playerName:
+          type: string
+        wins:
+          type: integer
+        losses:
+          type: integer
+        draws:
+          type: integer
+        totalGames:
+          type: integer
+        winRate:
+          type: number
+      required: [id, playerName, wins, losses, draws, totalGames, winRate]
+
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+      required: [error]
